@@ -1,0 +1,92 @@
+class Solution{
+  
+    static Node addTwoLists(Node first, Node second){
+        if(first==null){
+            return second;
+        }
+        
+        if(second==null){
+            return first;
+        }
+        
+        Node t1=reverse(first);
+        Node t2=reverse(second);
+        
+        Node result= new Node((t1.data+t2.data)%10);
+        int carry=(t1.data+t2.data)/10;
+        Node newresult=result;
+        t1=t1.next;
+        t2=t2.next;
+        int num=0;
+        
+        while(t1!=null && t2!=null){
+            num=t1.data+t2.data+carry;
+            carry=num/10;
+            num=num%10;
+            Node newnode=new Node(num);
+            newresult.next=newnode;
+            newresult=newresult.next;
+            t1=t1.next;
+            t2=t2.next;
+        }
+        
+    
+        if(t1!= null){
+            while(carry!=0 && t1!=null){
+                num= t1.data+carry;
+                carry= num/10;
+                num=num%10;
+                Node temp = new Node(num);
+                newresult.next= temp;
+                newresult = newresult.next;
+                t1= t1.next;
+            }
+            if(carry!=0){
+                Node temp = new Node(carry);
+                newresult.next= temp;
+            }
+            if(t1!= null)
+                newresult.next= t1;
+        }
+        
+        else if(t2!= null){
+            while(carry!=0 && t2!=null){
+                num= t2.data+carry;
+                carry= num/10;
+                num=num%10;
+                Node temp = new Node(num);
+                newresult.next= temp;
+                newresult = newresult.next;
+                t2= t2.next;
+            }
+            if(carry!=0){
+                Node temp = new Node(carry);
+                newresult.next= temp;
+            }
+            if(t2!= null)
+                newresult.next= t2;
+        }
+        
+        else if(carry != 0){
+            Node temp = new Node(carry);
+            newresult.next= temp;
+        }
+        
+        return reverse(result);
+        
+    }
+    
+    static Node reverse(Node head){
+        Node Prev=null;
+        Node Current=head;
+        Node Next=null;
+        while(Current!=null){
+            Next=Current.next;
+            Current.next=Prev;
+            Prev=Current;
+            Current=Next;
+        }
+        
+        return Prev;
+    }
+}
