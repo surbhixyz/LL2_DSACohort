@@ -1,0 +1,24 @@
+class Solution {
+    Node divide(int N, Node head) {
+        
+       Node temp=head;
+       while(temp.next!=null){
+           temp=temp.next;
+       }
+       
+       Node current=head;
+       for(int i=0; i<N; i++){
+           if(current.data%2!=0){
+               temp.next=new Node(current.data);
+               temp=temp.next;
+               current.data=current.next.data;
+               current.next=current.next.next;
+           }
+           
+           else{
+               current=current.next;
+           }
+       }
+       return head;
+    }
+}
