@@ -1,21 +1,67 @@
-class Solution {
-  
-   public long multiplyTwoLists(Node l1,Node l2) {
-       
-          long mod=1000000007;
-          long sum1=0;
-          long sum2=0;
-          
-        while(l1!=null){
-            sum1=(sum1*10+l1.data)%mod;
-            l1=l1.next;
-        }
+lass Solution {
+    static Node MultiplyLL(Node L1, Node L2){
+        L1=reverse(L1);
+        L2=reverse(L2);
         
-        while(l2!=null){
-            sum2=(sum2*10+l2.data)%mod;
-            l2=l2.next;
+        Node L2_iter=L2;
+        Node dummy= new Node(-1);
+        Node ansItr=dummy;
+        
+        while(L2_iter!=null){
+            Node prod=MultiplyDigit(L1, L2_iter.val);
+            L2_iter=L2_iter.next;
+            AddLL(prod, ansItr);
+            ansItr=ansItr.next;
         }
-         
-          return (sum1*sum2)%mod;
-   }
+        return reverse(dummy.next);
+    }
+    
+    static Node MultiplyDigit(Node head, int dig){
+        Node dummy= new Node(-1);
+        Node ac=dummy;
+        Node curr=head;
+        int carry=0;
+        
+        while(curr!=null || carry!=0){
+            int sum=carry+(curr!=null? curr.val*dig:0);
+            int digit=sum%10;
+            carry=sum/10;
+            
+            ac.next=new Node(digit);
+            
+            if(curr!=null){
+                curr=curr.next;
+                ac=ac.next;
+            }
+            
+            return dummy.next;
+        }
+    }
+    
+    
+    static void AddLL(Node head, Node ansItr){
+        Node c1=head;
+        Node c2=ansItr;
+        int carry=0;
+        
+        while(c1!=null || carry!=0){
+            int sum=carry+(c1!=null ? c1.val:0)+(c1!=null? c2.nextval:0);
+            
+            int digit=sum%10;
+            carry=sum/10;
+            
+            if(c2.next!=null){
+                c2.next.val=digit;
+            }
+            else{
+                c2.next= new Node(digit);
+            }
+            
+            if(c1!=null){
+                c1=c1.next;
+                c2=c2.next;
+            }
+        }
+    }
+    
 }
