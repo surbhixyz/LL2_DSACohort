@@ -1,4 +1,4 @@
-lass Solution {
+class Solution {
     static Node MultiplyLL(Node L1, Node L2){
         L1=reverse(L1);
         L2=reverse(L2);
